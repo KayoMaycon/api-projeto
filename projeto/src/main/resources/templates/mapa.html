@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>Mapa</title>
+   <script type="text/javascript">
+      google.charts.load("current", {
+        "packages":["map"],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        "mapsApiKey": "AIzaSyB6jbXU6rzzlIPpJvtIYA9TUWeSpAnPiOE"
+      });
+
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Lat', 'Long', 'Name'],
+          [-11.3022123, -41.8502312, 'Colégio Rui Barbosa'],
+          [-11.3025171, -41.849336, 'Terminal Rodoviário'],
+          [-11.3077395, -41.8536148, 'AABB'],
+        ]);
+
+        var options = {
+          mapType: 'styledMap',
+          zoomLevel: 17,
+          showTooltip: true,
+          showInfoWindow: true,
+          useMapTypeControl: true,
+
+          maps: {
+          // Your custom mapTypeId holding custom map styles.
+          styledMap: {
+            name: 'Styled Map', // This name will be displayed in the map type control.
+            styles: [
+              {featureType: 'poi.attraction',
+               stylers: [{color: '#fce8b2'}]
+              },
+              {featureType: 'road.highway',
+               stylers: [{hue: '#0277bd'}, {saturation: 50}]
+              },
+              {featureType: 'road.highway',
+               elementType: 'labels.icon',
+               stylers: [{hue: '#000'}, {saturation: 100}, {lightness: 50}]
+              },
+              {featureType: 'landscape',
+               stylers: [{hue: '#259b24'}, {saturation: 10}, {lightness: -22}]
+              }
+        ]}},
+          /*
+          icons: { Depois mexemos com vários tipos >> No mapa os descartes ficarão dispostos com marcadores segundo a categoria/mmaterial(cores), assim que o usuário clica aparece o relógio vermelho, depois que confirma aparecerá o segundo relógio e as informações adicionais, até a conclusão quando se encerrará a requisição
+          blue: {
+            normal:   url + 'Map-Marker-Ball-Azure-icon.png',
+            selected: url + 'Map-Marker-Ball-Right-Azure-icon.png'
+          },
+          green: {
+            normal:   url + 'Map-Marker-Push-Pin-1-Chartreuse-icon.png',
+            selected: url + 'Map-Marker-Push-Pin-1-Right-Chartreuse-icon.png'
+          },
+          pink: {
+            normal:   url + 'Map-Marker-Ball-Pink-icon.png',
+            selected: url + 'Map-Marker-Ball-Right-Pink-icon.png'
+          }
+        }*/
+      
+          icons: {
+            default: {
+              normal: 'https://icons.iconarchive.com/icons/graphicloads/100-flat/48/clock-icon.png',
+              selected: 'https://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/48/Clock-icon.png'
+            }
+          }
+        };
+
+        var map = new google.visualization.Map(document.getElementById('map_div'));
+        map.draw(data, options);
+      }
+      
+    </script>
+  </head>
+
+  <body>
+    <div id="map_div" style="width: 800px; height: 700px"></div>
+  </body>
+</html>

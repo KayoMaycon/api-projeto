@@ -15,16 +15,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
-        http
+        http.authorizeHttpRequests((authz) -> authz
+            .requestMatchers("/usuarios", "/usuarios/login", "/usuarios/create").permitAll()
+            .anyRequest().authenticated()
+        )
+
+        .addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+
+
+        /*http    Backup------------
+            .csrf((csrf) -> csrf.disable())
             .authorizeHttpRequests((authz) -> authz
-            .requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
+            .requestMatchers(HttpMethod.POST,"/usuarios/login", "/usuarios").permitAll()
 
             .anyRequest().authenticated()
             )
             .httpBasic(withDefaults());
 
         http.addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        return http.build();*/
 
         
        
